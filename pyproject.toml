@@ -5,6 +5,13 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "deepagents>=0.2.7",
     "fastmcp>=2.13.0.2",
+    "ipykernel>=7.1.0",
+    "langchain>=1.0.5",
+    "langchain-google-genai>=3.0.3",
+    "langchain-mcp-adapters>=0.1.13",
+    "python-dotenv>=1.2.1",
+    "streamlit>=1.51.0",
     "uvicorn>=0.38.0",
 ]
