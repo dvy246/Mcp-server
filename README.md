@@ -198,6 +198,3 @@ Check the logs in `logs/` directory for detailed error messages. Ensure:
 
 See LICENSE file for details.
 
-## Author
-
-MCP Chat Team
