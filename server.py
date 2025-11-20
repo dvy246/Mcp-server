@@ -1,7 +1,49 @@
+"""
+Math MCP Server
+===============
+
+A Model Context Protocol (MCP) server that provides basic mathematical operations
+as tools for LLM agents to use.
+
+Features:
+---------
+- Addition, subtraction, multiplication, division
+- Power and modulus operations
+- Robust type conversion and error handling
+- FastMCP-based implementation with stdio transport
+
+Tools Provided:
+---------------
+- add(a, b): Returns a + b
+- subtract(a, b): Returns a - b
+- multiply(a, b): Returns a * b
+- divide(a, b): Returns a / b (handles division by zero)
+- power(a, b): Returns a ** b
+- modulus(a, b): Returns a % b
+
+Usage:
+------
+Run as standalone server:
+    python server.py
+
+Or integrate with MCP client by configuring the server connection:
+    {
+        "command": "python",
+        "args": ["server.py"],
+        "transport": "stdio"
+    }
+
+Dependencies:
+-------------
+- fastmcp: MCP server framework
+
+Author: MCP Math Server Team
+License: See LICENSE file
+"""
+
 from fastmcp import FastMCP
 
 mcp = FastMCP('maths')
-
 
 def _as_number(x):
     """

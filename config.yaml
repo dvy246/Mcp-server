@@ -1,0 +1,45 @@
+# MCP Server Configuration
+# All paths can be overridden by environment variables
+
+servers:
+  math:
+    enabled: true
+    transport: stdio
+    command: ${UV_PATH:-uv}  # Falls back to 'uv' in PATH
+    args:
+      - run
+      - fastmcp
+      - run
+      - ${MATH_SERVER_PATH:-./server.py}
+  
+  expense:
+    enabled: true
+    transport: streamable_http
+    url: https://splendid-gold-dingo.fastmcp.app/mcp
+  
+  manim-server:
+    enabled: true
+    transport: stdio
+    command: ${PYTHON_PATH:-python3}
+    args:
+      - ${MANIM_SERVER_PATH}
+    env:
+      MANIM_EXECUTABLE: ${MANIM_EXECUTABLE:-manim}
+
+# LLM Configuration
+llm:
+  model: gemini-2.5-flash
+  temperature: 0.5
+  api_key_env: GEMINI_API_KEY
+
+# Application Settings
+app:
+  title: "MCP Chat"
+  icon: "🧰"
+  layout: centered
+  
+# Logging Configuration
+logging:
+  level: INFO
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: logs/mcp_chat.log
