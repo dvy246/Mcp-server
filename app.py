@@ -46,6 +46,8 @@ License: See LICENSE file
 
 import os
 import json
+import asyncio
+import inspect
 import logging
 import streamlit as st
 from pathlib import Path
@@ -132,7 +134,7 @@ def initialize_app():
         
         # Get tools from all servers
         try:
-            tools = st.session_state.client.get_tools()
+            tools = asyncio.run(st.session_state.client.get_tools())
             st.session_state.tools = tools
             st.session_state.tool_by_name = {t.name: t for t in tools}
             logger.info(f"Loaded {len(tools)} tools from MCP servers")
@@ -224,7 +226,12 @@ def process_user_message(user_text: str):
                     
                     logger.info(f"Calling tool: {name} with args: {args}")
                     tool = st.session_state.tool_by_name[name]
-                    res = tool.invoke(args)
+                    
+                    # Handle both sync and async tools
+                    if inspect.iscoroutinefunction(tool.invoke):
+                        res = asyncio.run(tool.ainvoke(args))
+                    else:
+                        res = tool.invoke(args)
                     
                     tool_msgs.append(
                         ToolMessage(tool_call_id=tc["id"], content=json.dumps(res))
